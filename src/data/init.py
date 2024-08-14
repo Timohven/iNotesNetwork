@@ -5,7 +5,8 @@ from sqlite3 import connect, Connection, Cursor, IntegrityError
 conn: Connection | None = None
 curs: Cursor | None = None
 
-def get_db(name: str|None = None, reset: bool = False):
+
+def get_db(name: str | None = None, reset: bool = False):
     global conn, curs
     if conn:
         if not reset:
@@ -22,5 +23,6 @@ def get_db(name: str|None = None, reset: bool = False):
         print(name)
     conn = connect(name, check_same_thread=False)
     curs = conn.cursor()
+
 
 get_db()

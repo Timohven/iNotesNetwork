@@ -16,7 +16,7 @@ def row_to_model(row: tuple) -> Note:
 
 
 def model_to_dict(note: Note) -> dict:
-    return note.dict()
+    return note.model_dump()
 
 
 def get_specific(name: str) -> Note:
