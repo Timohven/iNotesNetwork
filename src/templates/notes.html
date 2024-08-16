@@ -1,0 +1,65 @@
+{% extends "home.html" %}
+
+{% block notes_container %}
+<main class="container">
+    <hr>
+
+    <section class="container-fluid">
+        <form method="post">
+            <div class="col-auto">
+                <div class="input-group mb-3">
+                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="name"
+                           placeholder="Your new note name" type="text"
+                           value="{{ name }}"/>
+                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="description"
+                           placeholder="Your new note description" type="text"
+                           value="{{ description }}"/>
+                </div>
+                <div class="input-group mb-3">
+                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="type_of_source"
+                           placeholder="Your new note type of source" type="text"
+                           value="{{ type_of_source }}"/>
+                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="source"
+                           placeholder="Your new note source" type="text"
+                           value="{{ source }}"/>
+                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="language"
+                           placeholder="Your new note language" type="text"
+                           value="{{ name }}"/>
+                </div>
+                <button class="btn btn-outline-primary" data-mdb-ripple-color="dark" id="button-addon2"
+                            type="submit">
+                        Add Note
+                </button>
+            </div>
+        </form>
+    </section>
+
+
+    {% if note %}
+    <article class="card container-fluid">
+        <br/>
+        <h4>Note Name: {{ note.name }} </h4>
+        <p>
+            <strong>
+                Description: {{ note.description }}
+            </strong>
+        </p>
+        <a href="/note/all"> Home
+    </article>
+    {% else %}
+    <section class="container-fluid">
+        <h2 align="center">Notes</h2>
+        <br>
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                {% for note in notes %}
+                <li class="list-group-item">
+                    {{ loop.index }}. <a href="/note/{{ note.name }}"> {{ note.name }}: "{{ note.description }}" </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

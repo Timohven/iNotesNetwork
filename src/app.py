@@ -7,11 +7,10 @@ from web import note
 app = FastAPI()
 app.include_router(note.router)
 
-
-# @app.get("/")
-# async def index(request: Request, user: str = Cookie(None)):
-#     print('Current user is:', user, '!')
-#     return {"message": user}
+@app.get("/")
+async def index(request: Request, user: str = Cookie(None)):
+    print('Current user is:', user, '!')
+    return {"message": user}
 
 
 # @app.post("/setcookie/")
