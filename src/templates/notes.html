@@ -5,26 +5,27 @@
     <hr>
 
     <section class="container-fluid">
-        <form method="post">
+        <form method="post" action="http://localhost:8000/note/all/" enctype="multipart/form-data">
             <div class="col-auto">
                 <div class="input-group mb-3">
-                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="name"
-                           placeholder="Your new note name" type="text"
-                           value="{{ name }}"/>
-                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="description"
-                           placeholder="Your new note description" type="text"
-                           value="{{ description }}"/>
+                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="title"
+                           placeholder="Your new note name" type="text" value="{{ title }}"/>
                 </div>
                 <div class="input-group mb-3">
-                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="type_of_source"
+                    <textarea aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="content"
+                              placeholder="Your new note content" rows="5" value="{{ content }}">
+                    </textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="source_type"
                            placeholder="Your new note type of source" type="text"
-                           value="{{ type_of_source }}"/>
-                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="source"
+                           value="{{ source_type }}"/>
+                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="source_link"
                            placeholder="Your new note source" type="text"
-                           value="{{ source }}"/>
-                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="language"
-                           placeholder="Your new note language" type="text"
-                           value="{{ name }}"/>
+                           value="{{ source_link }}"/>
+                    <input aria-describedby="button-addon2" aria-label="Add a note" class="form-control" name="files"
+                           placeholder="Your new note files" type="file"
+                           multiple/>
                 </div>
                 <button class="btn btn-outline-primary" data-mdb-ripple-color="dark" id="button-addon2"
                             type="submit">
@@ -38,11 +39,22 @@
     {% if note %}
     <article class="card container-fluid">
         <br/>
-        <h4>Note Name: {{ note.name }} </h4>
+        <h4>Note Name: {{ note.title }} </h4>
         <p>
             <strong>
-                Description: {{ note.description }}
+                Description: {{ note.content }}
             </strong>
+        </p>
+        <p>
+            Source_ link: {{ note.source_link }}
+        </p>
+        <p>
+            <h4>{{ note['title'] }} - Files</h4>
+            <ul>
+                {% for file in note['files'] %}
+                <li><a href="/note/downloads/{{ file.filename }}">{{ file.filename }}</a></li>
+                {% endfor %}
+            </ul>
         </p>
         <a href="/note/all"> Home
     </article>
@@ -54,7 +66,7 @@
             <ul class="list-group list-group-flush">
                 {% for note in notes %}
                 <li class="list-group-item">
-                    {{ loop.index }}. <a href="/note/{{ note.name }}"> {{ note.name }}: "{{ note.description }}" </a>
+                    {{ loop.index }}. <a href="/note/{{ note.title }}"> {{ note.title }}: "{{ note.content }}" </a>
                 </li>
                 {% endfor %}
             </ul>

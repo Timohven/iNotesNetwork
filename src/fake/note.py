@@ -1,22 +1,28 @@
-from src.model.note import Note
+from src.model.note import Note, Tag
+from src.error import Missing, Duplicate
+from datetime import datetime
+import uuid
 
-
+_tags = [
+    Tag(tag_id=str(uuid.uuid4()),
+        name="python"),
+    Tag(tag_id=str(uuid.uuid4()),
+        name="fastapi"),
+    Tag(tag_id=str(uuid.uuid4()),
+        name="django"),
+]
 _notes = [
-    Note(name="Note1",
-         description="about FastAPI",
-         type_of_source="book",
-         source="FastAPI веб-разработка на Python.pdf",
-         language="RU"),
-    Note(name="Note2",
-         description="about Pydantic",
-         type_of_source="web",
-         source="file:///C:/Books/Python/FastAPI%20%D0%B2%D0%B5%D0%B1-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%20%D0%BD%D0%B0%20Python.pdf",
-         language="RU"),
-    Note(name="Note3",
-         description="about Pydantic",
-         type_of_source="web",
-         source="None",
-         language="RU")
+    Note(note_id=str(uuid.uuid4()),
+         title="Note1",
+         content="about FastAPI",
+         source_type="web",
+         source_link="https://example1.com",
+         created_at=datetime.now(),
+         updated_at=datetime.now(),
+         files=[])
+         # tags=[
+         #    Tag(name="python"),
+         #    Tag(name="fastapi")])
 ]
 
 
@@ -25,15 +31,21 @@ def get_all() -> list[Note]:
     return _notes
 
 
-def get_specific(name: str) -> Note | None:
-    # if name==None: print('Ok!')
+def get_specific(title: str) -> Note | None:
     for _note in _notes:
-        if _note.name == name:
+        if _note.title == title:
             return _note
+    #     else:
+    #         raise Missing(msg=f"Note '{title}' not found")
+    # return None
+    raise Missing(msg=f"Note '{title}' not found")
     return None
 
 
 def create(note: Note) -> Note:
+    # note.note_id = uuid.uuid4()
+    # note.created_at = datetime.now()
+    # note.updated_at = datetime.now()
     _notes.append(note)
     return note
 
@@ -46,5 +58,5 @@ def replace(note: Note) -> Note:
     return note
 
 
-def delete(name: str):
+def delete(title: str):
     return None

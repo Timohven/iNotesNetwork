@@ -7,6 +7,7 @@ from src.error import Missing, Duplicate
 
 # set this before data imports below for data.init
 os.environ["NOTE_SQLITE_DB"] = ":memory:"
+# print(os.environ["NOTE_SQLITE_DB"])
 from src.data import note
 
 

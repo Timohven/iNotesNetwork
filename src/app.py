@@ -3,9 +3,12 @@ from fastapi import FastAPI, Request, Cookie
 # from fastapi.responses import Response
 from web import note
 # import fake.note as service
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="C:/Users/ukrse/PycharmProjects/iNotesNetwork/src/uploads"), name="static")
 app.include_router(note.router)
+
 
 @app.get("/")
 async def index(request: Request, user: str = Cookie(None)):
